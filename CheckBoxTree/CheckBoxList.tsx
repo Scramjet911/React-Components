@@ -1,10 +1,10 @@
-import { Disclosure } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Disclosure } from "@headlessui/react";
+import { Fragment } from "react";
 
-import { ChevronDown } from 'assets/icons';
+import { ChevronDown } from "assets/icons";
 
-import { MultiLevelOptions, CheckboxTreeStyles, FlatNodes } from './types';
-import Checkbox from './Checkbox';
+import { MultiLevelOptions, CheckboxTreeStyles, FlatNodes } from "./types";
+import Checkbox from "./ChecBbox";
 
 interface CheckboxListProps {
   minimizeSubLists?: boolean;
@@ -19,9 +19,9 @@ const CheckboxList = ({
   flatNodes,
   minimizeSubLists,
   options,
-  styles = { checkboxContainer: '' },
+  styles = { checkboxContainer: "" },
   handleCheckboxSelect,
-  isCheckboxIndeterminate
+  isCheckboxIndeterminate,
 }: CheckboxListProps): JSX.Element => {
   return (
     <>
@@ -34,7 +34,7 @@ const CheckboxList = ({
                 {({ open }) => (
                   <>
                     <Disclosure.Button
-                      as='div'
+                      as="div"
                       className={`flex justify-between items-center ${styles?.optionContainer}`}
                     >
                       <div
@@ -55,10 +55,10 @@ const CheckboxList = ({
                         <p className={styles?.label}>{label}</p>
                       </div>
                       <ChevronDown
-                        className={open ? 'rotate-180 transform' : ''}
+                        className={open ? "rotate-180 transform" : ""}
                       />
                     </Disclosure.Button>
-                    <Disclosure.Panel className={styles?.subList || 'ml-7'}>
+                    <Disclosure.Panel className={styles?.subList || "ml-7"}>
                       <CheckboxList
                         options={value}
                         minimizeSubLists={minimizeSubLists}
@@ -85,7 +85,7 @@ const CheckboxList = ({
                   <p className={styles?.label}>{label}</p>
                 </div>
                 {Array.isArray(value) && (
-                  <div className={styles?.subList || 'ml-7'}>
+                  <div className={styles?.subList || "ml-7"}>
                     <CheckboxList
                       options={value}
                       minimizeSubLists={minimizeSubLists}

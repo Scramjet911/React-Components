@@ -1,15 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 
-import { translate } from 'utils/locale';
-
-import Checkbox from './Checkbox';
-import CheckboxList from './CheckboxList';
-import {
-  CheckboxTreeStyles,
-  flattenNodes,
-  MultiLevelOptions,
-} from './types';
-import { toggleNodeCheck } from './utils';
+import Checkbox from "./CheckBox";
+import CheckboxList from "./CheckBoxList";
+import { CheckboxTreeStyles, MultiLevelOptions } from "./types";
+import { flattenNodes, toggleNodeCheck } from "./utils";
 
 interface CheckboxTreeProps {
   allowIndeterminate?: boolean;
@@ -20,7 +14,7 @@ interface CheckboxTreeProps {
   handleChange?: (option: MultiLevelOptions, oldState: boolean) => void;
 }
 
-const selectAllId = 'checkboxTree_selectAll';
+const selectAllId = "checkboxTree_selectAll";
 
 /** Component to render multilevel checkbox lists
 
@@ -36,14 +30,14 @@ const CheckboxTree = ({
   selectedOptions,
   showSelectAll,
   styles,
-  handleChange
+  handleChange,
 }: CheckboxTreeProps): JSX.Element => {
   const optionList = useRef([
     {
       id: selectAllId,
-      label: translate('selectAll'),
-      value: options
-    }
+      label: "Select All",
+      value: options,
+    },
   ]);
 
   const selectedOptionsWithSelectAll = [...selectedOptions];
@@ -68,20 +62,24 @@ const CheckboxTree = ({
   };
 
   const handleCheckboxSelect = (option: MultiLevelOptions) => {
-    if (option.id === selectAllId) {
-      options.forEach((item) => {
-        if (flatNodes[selectAllId].isChecked) {
-          if (flatNodes[item.id].isChecked) {
+    if (handleChange) {
+      if (option.id === selectAllId) {
+        options.forEach((item) => {
+          if (
+            flatNodes[selectAllId].isChecked &&
+            flatNodes[item.id].isChecked
+          ) {
             handleChange(item, true);
-          }
-        } else if (!flatNodes[selectAllId].isChecked) {
-          if (!flatNodes[item.id].isChecked) {
+          } else if (
+            !flatNodes[selectAllId].isChecked &&
+            !flatNodes[item.id].isChecked
+          ) {
             handleChange(item, false);
           }
-        }
-      });
-    } else {
-      handleChange(option, flatNodes[option.id].isChecked);
+        });
+      } else {
+        handleChange(option, flatNodes[option.id].isChecked);
+      }
     }
     setFlatNodes((currentFlatNodes) => {
       return toggleNodeCheck(option, { ...currentFlatNodes });

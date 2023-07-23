@@ -1,5 +1,5 @@
 export interface MultiLevelOptions {
-  id?: string;
+  id: string;
   label: string | JSX.Element;
   value: string | MultiLevelOptions[];
 }
